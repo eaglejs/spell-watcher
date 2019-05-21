@@ -1,8 +1,10 @@
 export default class ProductResults {
-  static size: string;
-  static url: string;
-  static available: boolean;
-  static imgUrl: string;
-  static title: string;
-  static price: string;
+  constructor(
+    public size: string,
+    public url: string,
+    public available: boolean,
+    public imgUrl: string,
+    public title: string,
+    public price: string
+  ) {}
 }
