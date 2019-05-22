@@ -13,11 +13,11 @@ const parse = require('node-html-parser');
 
 function getPagesDetails(product: Product): Promise<any> {
   let productResults: ProductResults = {
-    title: '',
-    size: '',
     available: false,
-    price: '',
     imgUrl: '',
+    price: '',
+    size: '',
+    title: '',
     url: ''
   };
   let promise = new Promise(resolve => {
@@ -26,7 +26,7 @@ function getPagesDetails(product: Product): Promise<any> {
         const document = parse.parse(html.data);
         const title = document.querySelector('h2').innerHTML;
         const sizes = document.querySelectorAll('.size-swatches label');
-        const price = document.querySelector('.price .money').innerHTML;
+        const price = document.querySelector('#product-form .price .money').innerHTML;
         const imgUrl = document.querySelector('#main-product-image').attributes.style;
 
         productResults.price = price;
