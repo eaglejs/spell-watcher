@@ -2,11 +2,8 @@ version: "3.3"
 
 services:
   node-service:
-    build:
-      context: .
-      dockerfile: Dockerfile.node-service
     command: ["npm", "run", "prod"]
-    image: spell-watcher/node-service:latest
+    image: eaglejs/spell-watcher-node-service:latest
     volumes:
       - ./node-service:/root/spell-watcher/node-service
     ports:
@@ -15,7 +12,7 @@ services:
     container_name: node-service
 
   nginx:
-    image: nginx:latest
+    image: eaglejs/spell-watcher-web:latest
     command: []
     volumes:
       - ./ng-app/dist/spell-watcher-ui/:/usr/share/nginx/html:ro
@@ -26,7 +23,7 @@ services:
     container_name: nginx
 
   reverseproxy:
-    image: nginx:latest
+    image: eaglejs/spell-watcher-reverseproxy:latest
     volumes:
       - ./nginx.reverseproxy.conf:/etc/nginx/nginx.conf:ro
     ports:

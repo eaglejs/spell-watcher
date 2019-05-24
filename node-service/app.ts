@@ -4,10 +4,10 @@ import axios from 'axios';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import nodemailer from 'nodemailer';
+import { reject } from 'bluebird';
 
 import Product from './models/product';
 import ProductResults from './models/product-results';
-import { reject } from 'bluebird';
 import config from './config.json';
 
 const parse = require('node-html-parser');
