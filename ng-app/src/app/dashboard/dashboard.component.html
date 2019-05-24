@@ -1,0 +1,35 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="product-form">
+  <section class="product-form-group" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+    <mat-form-field fxFlex="calc(10% - 10px)">
+      <mat-label for="size">Size</mat-label>
+      <mat-select id="size" matInput formControlName="size" required>
+        <mat-option [value]="size.id" *ngFor="let size of getSizeOptions()">{{size.name}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="productForm.controls.size.errors && productForm.controls.size.errors.required">Size is required.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field fxFlex="calc(50% - 10px)">
+      <mat-label for="url">URL</mat-label>
+      <input type="text" id="url" matInput formControlName="url" required>
+      <mat-error *ngIf="productForm.controls.url.errors && productForm.controls.url.errors.required">URL is required.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field fxFlex="calc(40% - 10px)">
+      <mat-label for="email">Email</mat-label>
+      <input type="email" id="email" matInput formControlName="email">
+      <mat-error *ngIf="productForm.controls.email.errors && productForm.controls.email.errors.email">Please provide a
+        valid
+        email.
+      </mat-error>
+    </mat-form-field>
+  </section>
+  <section class="text-right">
+    <button mat-raised-button color="primary">Add</button>
+  </section>
+</form>
+<section fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center stretch">
+  <app-product *ngFor="let product of products | keyvalue" [product]="product" [products]="products"
+    class="products" fxLayoutAlign="stretch stretch" fxFlex="0 1 calc(25% - 10px)"
+    (updateSavedProducts)="updateSavedProducts($event)" (removeSavedProducts)="removeSavedProducts($event)"></app-product>
+</section>
+

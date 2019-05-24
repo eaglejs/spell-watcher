@@ -1,0 +1,15 @@
+<mat-card class="product-card">
+  <mat-card-title>
+    <h2>{{product.value.title}}</h2>
+  </mat-card-title>
+  <mat-card-subtitle>Size: {{product.value.size}}, Price: {{product.value.price}}</mat-card-subtitle>
+  <a href="{{product.value.url}}" target="_blank" class="header-image-link">
+    <img class="header-image" src="{{getImgUrlString(product.value.imgUrl)}}" alt="clothes">
+  </a>
+  <section class="availability">
+    <span [attr.data-available]="product.value.available"
+      title="{{product.value.available ? 'Available' : 'Not available'}}"></span>
+    <button class="refresh-btn" (click)="refreshProduct(product)"><i class="material-icons">refresh</i></button>
+    <button class="delete-btn" (click)="deleteProduct(product)"><i class="material-icons">delete</i></button>
+  </section>
+</mat-card>

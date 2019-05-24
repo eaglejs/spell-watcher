@@ -1,0 +1,100 @@
+h2 {
+  font-size: 0.7em;
+}
+
+.product-card {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.availability {
+  height: 20px;
+}
+
+%action-btn-shared {
+  border: none;
+  background: none;
+  bottom: 8px;
+  color: rgb(169, 169, 169);
+  height: 35px;
+  position: absolute;
+  width: 50px;
+}
+
+.delete-btn {
+  @extend %action-btn-shared;
+  right: 4px;
+
+  &:hover {
+    color: red;
+    cursor: pointer;
+  }
+}
+
+.refresh-btn {
+  @extend %action-btn-shared;
+  right: 54px;
+
+  &:hover {
+    color: #000;
+    cursor: pointer;
+  }
+}
+
+%header-image-link-shared{
+  box-shadow: 0px 0px 10px deeppink;
+}
+
+.header-image-link {
+  border-radius: 50%;
+  display: block;
+  height: 100px;
+  margin: 10px auto;
+  max-width: 100%;
+  overflow: hidden;
+  width: 100px;
+
+  &:hover {
+    @extend %header-image-link-shared;
+  }
+
+  &:focus {
+    @extend %header-image-link-shared;
+  }
+
+  &:active {
+    @extend %header-image-link-shared;
+  }
+
+  & .header-image {
+    background-size: cover;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+
+  }
+}
+
+
+%availability-shared {
+  border-radius: 50%;
+  bottom: 18px;
+  content: '';
+  display: inline-block;
+  height: 15px;
+  left: 15px;
+  position: absolute;
+  width: 15px;
+}
+
+span[data-available="true"]:after {
+  background: green;
+  box-shadow: 0 0 5px green;
+  @extend %availability-shared;
+}
+
+span[data-available="false"]:after {
+  background: red;
+  box-shadow: 0 0 5px red;
+  @extend %availability-shared;
+}

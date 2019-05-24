@@ -1,0 +1,6 @@
+{
+  "apiUrl": "http://localhost:5000/",
+  "productUrl": "get-product",
+  "pollingProductsInterval": 60000,
+  "snackbarDuration": 5000
+}

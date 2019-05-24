@@ -1,0 +1,25 @@
+FROM node:current-slim
+
+MAINTAINER Joshua S. Eagle
+
+WORKDIR /root/
+
+# Update NPM
+RUN npm cache clean -f
+
+COPY ./ng-app /root/ng-app
+
+WORKDIR /root/ng-app
+
+RUN npm install -g @angular/cli
+
+RUN npm install --silent
+
+# Install Chrome
+# RUN apt-get update && apt-get install -y --no-install-recommends chromium iceweasel && apt-get clean
+
+ENV API_HOST python-service
+
+EXPOSE 4200
+
+CMD ["npm", "run", "docker-start"]

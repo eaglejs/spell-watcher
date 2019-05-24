@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'material-design-icons/iconfont/material-icons.css';
+
+body {
+  background: #fafafa;
+  margin: 0;
+  overflow: hidden;
+}
+
+app-header {
+  display: block;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+router-outlet + * {
+  display: block;
+  height: calc(100vh - 99px);
+  margin: 64px auto 35px auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-width: 1200px;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}

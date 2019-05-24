@@ -1,14 +1,10 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/node-service/dist
-/ng-app/dist
-/node-service/build
-/ng-app/build
-/node-service/tmp
-/ng-app/tmp
-/node-service/out-tsc
-/ng-app/out-tsc
+**/dist
+**/build
+**/tmp
+**/out-tsc
 # Only exists if Bazel was run
 **/bazel-out
 
@@ -18,7 +14,6 @@
 # profiling files
 chrome-profiler-events.json
 speed-measure-plugin.json
-/node-service/config.json
 
 # IDEs and editors
 /.idea
