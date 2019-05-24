@@ -6,9 +6,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "ts-node-dev --respawn --transpileOnly ./app.ts",
-    "prod": "build && node ./build/app.js",
-    "start": "node ./build/app.js",
-    "prestart": "npm run build"
+    "prod": "tsc && node ./build/app.js",
+    "start": "node ./build/app.js"
   },
   "author": "Joshua S. Eagle <joshuaseagle@gmail.com>",
   "license": "ISC",

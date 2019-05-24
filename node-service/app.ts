@@ -8,9 +8,9 @@ import nodemailer from 'nodemailer';
 import Product from './models/product';
 import ProductResults from './models/product-results';
 import { reject } from 'bluebird';
+import config from './config.json';
 
 const parse = require('node-html-parser');
-const config = require('./config.json');
 
 function getPagesDetails(product: Product): Promise<any> {
   let productResults: ProductResults = {
