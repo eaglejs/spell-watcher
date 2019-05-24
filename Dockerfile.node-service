@@ -1,6 +1,6 @@
 FROM node:current-slim
 
-MAINTAINER Joshua S. Eagle
+LABEL Joshua S. Eagle
 
 WORKDIR /root/
 

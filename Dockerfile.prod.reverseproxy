@@ -1,0 +1,7 @@
+FROM nginx:latest
+
+LABEL Joshua S. Eagle
+
+WORKDIR /root/
+
+COPY ./nginx.reverseproxy.conf /etc/nginx/nginx.conf

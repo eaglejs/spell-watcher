@@ -1,31 +1,30 @@
 version: "3.3"
 
 services:
-  node-service:
-    command: ["npm", "run", "prod"]
-    image: eaglejs/spell-watcher-node-service:latest
-    volumes:
-      - ./node-service:/root/spell-watcher/node-service
-    ports:
-      - 5000
-    restart: always
-    container_name: node-service
-
   nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod.ng-app
     image: eaglejs/spell-watcher-web:latest
     command: []
-    volumes:
-      - ./ng-app/dist/spell-watcher-ui/:/usr/share/nginx/html:ro
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
       - 80:80
     restart: always
     container_name: nginx
 
+  node-service:
+    command: ["npm", "run", "prod"]
+    image: eaglejs/spell-watcher-node-service:latest
+    ports:
+      - 5000
+    restart: always
+    container_name: node-service
+
   reverseproxy:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod.reverseproxy
     image: eaglejs/spell-watcher-reverseproxy:latest
-    volumes:
-      - ./nginx.reverseproxy.conf:/etc/nginx/nginx.conf:ro
     ports:
       - 5000:5000
     restart: always

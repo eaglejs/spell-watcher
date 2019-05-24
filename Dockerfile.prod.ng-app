@@ -1,0 +1,8 @@
+FROM nginx:latest
+
+LABEL Joshua S. Eagle
+
+WORKDIR /root/
+
+COPY ./ng-app/dist/spell-watcher-ui/ /usr/share/nginx/html
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
