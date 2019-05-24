@@ -24,11 +24,47 @@ function getPagesDetails(product: Product): Promise<any> {
   let promise = new Promise(resolve => {
     axios.get(product.url)
       .then(function (html: any) {
-        const document = parse.parse(html.data);
-        const title = document.querySelector('h2').innerHTML;
-        const sizes = document.querySelectorAll('.size-swatches label');
-        const price = document.querySelector('#product-form .price .money').innerHTML;
-        const imgUrl = document.querySelector('#main-product-image').attributes.style;
+        let document;
+        let title;
+        let sizes;
+        let price;
+        let imgUrl;
+
+        try {
+          document = parse.parse(html.data);
+        } catch (error) {
+          throw error;
+        }
+
+        try {
+          title = document.querySelector('h2');
+          title = title ? title.innerHTML : '';
+        } catch (error) {
+          throw error;
+        }
+
+        try {
+          sizes = document.querySelectorAll('.size-swatches label') || '';
+        } catch (error) {
+          throw error;
+        }
+
+        try {
+          price = document.querySelector('#product-form .price .money');
+          price = price ? price.innerHTML : 'Sold Out';
+        } catch (error) {
+          throw error;
+        }
+
+        try {
+          imgUrl = document.querySelector('#main-product-image');
+          imgUrl = imgUrl ? imgUrl.attributes.style : '';
+        } catch (error) {
+          throw error;
+        }
+
+
+
 
         productResults.price = price;
         productResults.title = title;
@@ -39,6 +75,7 @@ function getPagesDetails(product: Product): Promise<any> {
           if (sizes[i].text === product.size) {
             productResults.size = product.size;
             productResults.available = sizes[i].attributes.class === 'not-available' ? false : true;
+            //productResults.available = true;
             break;
           } else {
             productResults.size = 'N/A';
