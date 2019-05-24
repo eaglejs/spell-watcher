@@ -11,10 +11,8 @@ COPY ./node-service /root/node-service/
 
 WORKDIR /root/node-service/
 
-RUN npm install -g nodemon
-
 RUN npm install --silent
 
-EXPOSE 8080
+EXPOSE 5000
 
-CMD ["npm", "run", "start-be"]
+CMD ["npm", "run", "prod"]
