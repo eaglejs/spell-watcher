@@ -12,7 +12,8 @@ import config from './config.json';
 
 const parse = require('node-html-parser');
 
-function getPagesDetails(product: Product): Promise<any> {
+async function getPagesDetails(product: Product) {
+  let html;
   let productResults: ProductResults = {
     available: false,
     imgUrl: '',
@@ -21,77 +22,71 @@ function getPagesDetails(product: Product): Promise<any> {
     title: '',
     url: ''
   };
-  let promise = new Promise(resolve => {
-    axios.get(product.url)
-      .then(function (html: any) {
-        let document;
-        let title;
-        let sizes;
-        let price;
-        let imgUrl;
+  let document;
+  let title;
+  let sizes;
+  let price;
+  let imgUrl;
 
-        try {
-          document = parse.parse(html.data);
-        } catch (error) {
-          throw error;
-        }
-
-        try {
-          title = document.querySelector('h2');
-          title = title ? title.innerHTML : '';
-        } catch (error) {
-          throw error;
-        }
-
-        try {
-          sizes = document.querySelectorAll('.size-swatches label') || '';
-        } catch (error) {
-          throw error;
-        }
-
-        try {
-          price = document.querySelector('#product-form .price .money');
-          price = price ? price.innerHTML : 'Sold Out';
-        } catch (error) {
-          throw error;
-        }
-
-        try {
-          imgUrl = document.querySelector('#main-product-image');
-          imgUrl = imgUrl ? imgUrl.attributes.style : '';
-        } catch (error) {
-          throw error;
-        }
+  try {
+    html = await axios.get(product.url);
+  } catch(error) {
+    return error;
+  };
 
 
+  try {
+    document = parse.parse(html.data);
+  } catch (error) {
+    throw error;
+  }
 
+  try {
+    title = document.querySelector('h2');
+    title = title ? title.innerHTML : '';
+  } catch (error) {
+    throw error;
+  }
 
-        productResults.price = price;
-        productResults.title = title;
-        productResults.imgUrl = imgUrl;
-        productResults.url = product.url;
+  try {
+    sizes = document.querySelectorAll('.size-swatches label') || '';
+  } catch (error) {
+    throw error;
+  }
 
-        for (let i = 0; i < sizes.length; i++) {
-          if (sizes[i].text === product.size) {
-            productResults.size = product.size;
-            productResults.available = sizes[i].attributes.class === 'not-available' ? false : true;
-            //productResults.available = true;
-            break;
-          } else {
-            productResults.size = 'N/A';
-            productResults.available = false;
-          }
-        }
+  try {
+    price = document.querySelector('#product-form .price .money');
+    price = price ? price.innerHTML : 'Sold Out';
+  } catch (error) {
+    throw error;
+  }
 
-        resolve(productResults);
-      })
-      .catch(function (error: any) {
-        console.log(error);
-        reject(error);
-      });
-  });
+  try {
+    imgUrl = document.querySelector('#main-product-image');
+    imgUrl = imgUrl ? imgUrl.attributes.style : '';
+  } catch (error) {
+    throw error;
+  }
 
-  return promise;
+  productResults.price = price;
+  productResults.title = title;
+  productResults.imgUrl = imgUrl;
+  productResults.url = product.url;
+
+  for (let i = 0; i < sizes.length; i++) {
+    if (sizes[i].text === product.size) {
+      productResults.size = product.size;
+      productResults.available = sizes[i].attributes.class === 'not-available' ? false : true;
+      //productResults.available = true;
+      break;
+    } else {
+      productResults.size = 'N/A';
+      productResults.available = false;
+    }
+  }
+
+  return productResults;
+
 }
 
 function sendEmailNotification(product: Product, productResults: ProductResults): void {
@@ -122,15 +117,19 @@ const app: express.Application = express();
 app.use(cors());
 app.use(bodyParser.json()); // support json encoded bodies
 
-app.post('/get-product', function (req, res) {
-  getPagesDetails(req.body).then((productResults: ProductResults) => {
-    if (productResults.available) {
-      sendEmailNotification(req.body, productResults);
-    }
-    res.send(productResults);
-  }).catch(error => {
-    res.status(500).send(error);
-  });
+app.post('/get-product', async function (req, res) {
+  const productResults = await getPagesDetails(req.body)
+
+  if (productResults['message']) {
+    res.status(productResults.response.status).send();
+    return;
+  }
+
+  if (productResults.available) {
+    sendEmailNotification(req.body, productResults);
+  }
+  res.send(productResults);
+
 });
 
 app.listen(5000, function () {
