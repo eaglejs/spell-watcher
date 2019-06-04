@@ -62,8 +62,8 @@ export class ApiService {
       this.pollingItems.set(PRODUCT_ID, timer(0, config.pollingProductsInterval).pipe(
         flatMap(() => this.http.post<ProductResults>(`${config.apiUrl}${config.productUrl}`, PRODUCT, httpOptions)),
         filter(data => data.available === true),
-        take(1),
-        finalize(() => this.unregisterPoll(PRODUCT_ID))
+        take(1)
+        // finalize(() => this.unregisterPoll(PRODUCT_ID))
       ));
     }
 
