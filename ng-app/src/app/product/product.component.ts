@@ -6,10 +6,9 @@ import { ApiService } from '../services/api.service';
 import { OptionsService } from '../services/options.service';
 
 import { Product } from '../models/product';
-import { ProductResults } from '../models/product-results';
 
 import * as config from '../../assets/config.json';
-import { noConflict } from 'q';
+
 
 @Component({
   selector: 'app-product',
@@ -56,7 +55,8 @@ export class ProductComponent implements OnInit, OnChanges, OnDestroy {
       this.snackbar.open(`${product.title} saved successfully!`, 'OK', { duration: config.snackbarDuration });
       this.updateSavedProducts.emit(product);
     }, error => {
-      this.snackbar.open(`${error.message}: Something went wrong!`, 'FAIL', { duration: config.snackbarDuration });
+      this.snackbar.open(`${error.message}`, 'FAIL', { duration: config.snackbarDuration });
+      this.deleteProduct(newProduct);
     });
   }
 
