@@ -50,12 +50,24 @@ export class ProductComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  notificationHandler(product): void {
+    if (product.available) {
+      const snackbar = this.snackbar.open(`${product.title} is Available!`, 'OK', {});
+      this.unregisterPolling(product);
+      this.apiService.playNotification();
+      snackbar.afterDismissed().subscribe(() => {
+        this.apiService.stopNotification();
+      });
+    }
+  }
+
   getProduct(newProduct): void {
     this.apiService.getProductResults(newProduct).subscribe(product => {
       this.snackbar.open(`${product.title} saved successfully!`, 'OK', { duration: config.snackbarDuration });
+      this.notificationHandler(product);
       this.updateSavedProducts.emit(product);
     }, error => {
-      this.snackbar.open(`${error.message}`, 'FAIL', { duration: config.snackbarDuration });
+      this.snackbar.open(`${error.error.message}`, 'FAIL', { duration: config.snackbarDuration });
       this.deleteProduct(newProduct);
     });
   }

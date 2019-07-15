@@ -82,8 +82,10 @@ export class DashboardComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.products.set(this.apiService.buildProductId(this.productForm.value), this.productForm.value);
-    this.setEmail();
-    this.clearForm();
+    if (this.productForm.valid) {
+      this.products.set(this.apiService.buildProductId(this.productForm.value), this.productForm.value);
+      this.setEmail();
+      this.clearForm();
+    }
   }
 }

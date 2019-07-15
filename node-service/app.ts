@@ -77,11 +77,12 @@ async function getPagesDetails(product: Product) {
     if (sizes[i].text === product.size) {
       productResults.size = product.size;
       productResults.available = sizes[i].attributes.class === 'not-available' ? false : true;
-      //productResults.available = true;
+      // productResults.available = true; used to test a successful result
       break;
     } else {
       productResults.size = 'N/A';
       productResults.available = false;
+      // productResults.available = true; used to test a successful result
     }
   }
 
@@ -128,6 +129,11 @@ app.post('/get-product', async function (req, res) {
   if (productResults.available) {
     sendEmailNotification(req.body, productResults);
   }
+
+  if (productResults.size === 'N/A') {
+    res.status(500).send({message: 'This size is not available. :('})
+  }
+
   res.send(productResults);
 
 });
