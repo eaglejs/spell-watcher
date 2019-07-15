@@ -19,7 +19,7 @@ import { ProductResults } from '../models/product-results';
 })
 export class DashboardComponent implements OnInit {
 
-  @ViewChild(FormGroupDirective) productFormGroupDirective;
+  @ViewChild(FormGroupDirective, {static: true}) productFormGroupDirective;
   productForm: FormGroup;
   productResults: ProductResults;
   product: Product;
