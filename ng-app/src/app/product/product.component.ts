@@ -68,7 +68,7 @@ export class ProductComponent implements OnInit, OnChanges, OnDestroy {
           const snackbar = this.snackbar.open(`${product.title} is Available!`, 'OK', { });
           this.unregisterPolling(product);
           this.apiService.playNotification();
-          snackbar.afterDismissed().subscribe(null, null, () => {
+          snackbar.afterDismissed().subscribe(() => {
             this.apiService.stopNotification();
           });
         }
