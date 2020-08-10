@@ -140,5 +140,8 @@
       }
     }
   },
-  "defaultProject": "spell-watcher-ui"
+  "defaultProject": "spell-watcher-ui",
+  "cli": {
+    "analytics": "3c45e6ba-a1a2-4926-981e-338b0821fc0a"
+  }
 }
