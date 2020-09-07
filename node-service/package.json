@@ -8,7 +8,7 @@
     "dev": "ts-node-dev --respawn --transpileOnly ./app.ts",
     "prod": "tsc && node ./build/app.js",
     "start": "node ./build/app.js",
-    "start-debug": "sleep 5 && nodemon --inspect=0.0.0.0:9229 ./src/app.js"
+    "start-debug": "tsc && nodemon --inspect=0.0.0.0:9229 ./build/app.js"
   },
   "author": "Joshua S. Eagle <joshuaseagle@gmail.com>",
   "license": "ISC",

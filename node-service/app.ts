@@ -33,7 +33,6 @@ async function getPagesDetails(product: Product) {
     return error;
   };
 
-
   try {
     document = parse.parse(html.data);
   } catch (error) {
