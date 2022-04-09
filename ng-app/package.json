@@ -24,7 +24,7 @@
     "@angular/router": "^10.0.8",
     "core-js": "^3.6.5",
     "material-design-icons": "^3.0.1",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "rxjs": "^6.6.2",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
